@@ -10,8 +10,8 @@ const Header = () => {
 
   return (
     <>
-      <div className="container mx-auto mb-[80px]">
-        <div className="navbar bg-warning px-10 fixed top-0 left-0 right-0 z-50">
+      <div className="container mx-auto mb-[80px] ">
+        <div className="navbar px-10 fixed top-0 left-0 right-0 z-50 pt-2 pb-2 shadow-md shadow-blue-950 ">
           <div className="navbar-start ">
             <div className="dropdown">
               <div
@@ -34,9 +34,14 @@ const Header = () => {
                   />
                 </svg>
               </div>
+              
             </div>
             <Link to="/" className="btn btn-ghost text-3xl">
-              daisyUI
+              <img
+                src="/logo2.png"
+                alt="logo"
+                className=" w-15 h-8 sm:w-15 sm:h-8 md:w-30 md:h-9 lg:w-25 lg:h-10"
+              />
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
