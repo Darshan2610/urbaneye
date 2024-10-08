@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
 const Header = () => {
   const { auth, logout } = useAuth();
   
-
+  // Check if the user is an admin
+  const isAdmin = auth.user && auth.user.role === 'admin'; // Assuming 'admin' is the role identifier
 
   return (
     <>
@@ -33,28 +34,6 @@ const Header = () => {
                   />
                 </svg>
               </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <li>
-                  <a>Item 1</a>
-                </li>
-                <li>
-                  <a>Parent</a>
-                  <ul className="p-2">
-                    <li>
-                      <a>Submenu 1</a>
-                    </li>
-                    <li>
-                      <a>Submenu 2</a>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <a>Item 3</a>
-                </li>
-              </ul>
             </div>
             <Link to="/" className="btn btn-ghost text-3xl">
               daisyUI
@@ -62,44 +41,59 @@ const Header = () => {
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">
-              <li>
-                <a className="btn btn-ghost text-xl ">About</a>
-              </li>
-              <li>
-                <Link to="/coupons" className="btn btn-ghost text-xl">
-                  Coupons
-                </Link>
-              </li>
+              {/* Render different links based on user role */}
+              {isAdmin ? (
+                <>
+                  <li>
+                    <Link
+                      to="/admin/dashboard"
+                      className="btn btn-ghost text-xl"
+                    >
+                      Admin Dashboard
+                    </Link>
+                  </li>
+                  {/* Add more admin-specific links here if needed */}
+                </>
+              ) : (
+                <>
+                  <li>
+                    <a className="btn btn-ghost text-xl">About</a>
+                  </li>
+                  <li>
+                    <Link to="/coupons" className="btn btn-ghost text-xl">
+                      Coupons
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/report-issue" className="btn btn-ghost text-xl">
+                      Report Issue
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
           {auth.user ? (
             <div className="navbar-end space-x-3">
-              <Link to="/report-issue" className="btn btn-ghost text-xl">
-                Report Issue
-              </Link>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <div className="dropdown dropdown-end">
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    className="btn btn-ghost btn-circle avatar"
-                  >
-                    <div className="w-10 rounded-full">
-                      <img
-                        alt="User Avatar"
-                        src={
-                          auth.user && auth.user.profilePhotoUrl
-                            ? `http://localhost:5000/${auth.user.profilePhotoUrl}` // Ensure the URL is correct
-                            : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" // Fallback image
-                        } // Fallback image
-                      />
-                    </div>
+              <div className="dropdown dropdown-end">
+                <Link
+                  to="/profile" // Redirect to profile page on avatar click
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="User Avatar"
+                      src={
+                        auth.user && auth.user.profilePhotoUrl
+                          ? `http://localhost:5000/${auth.user.profilePhotoUrl}` // Ensure the URL is correct
+                          : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" // Fallback image
+                      }
+                    />
                   </div>
-                </div>
-              </ul>
+                </Link>
+              </div>
               <button onClick={logout}>
                 <a>Logout</a>
               </button>

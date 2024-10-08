@@ -49,7 +49,7 @@ export const createReport = async (req, res) => {
     }
 
     try {
-      const imageUrls = req.files.map(file => file.path);
+      const imageUrls = req.files.map((file) => file.path.replace(/\\/g, "/"));
 
       const newReport = new Report({
         title,

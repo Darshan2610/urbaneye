@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
+import { useLocation } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
 const Login = () => {
+  const location = useLocation();
+  const message = location.state?.message;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -29,7 +32,12 @@ const Login = () => {
         // Update auth context with the full user object
         login(response.data.user, response.data.user.role, response.data.token); // Pass the entire user object
 
-        navigate("/"); // Redirect to home page or dashboard
+        // Redirect based on user role
+        if (response.data.user.role === 'admin') {
+          navigate("/admin/users"); // Redirect to admin dashboard
+        } else {
+          navigate("/"); // Redirect to home page or dashboard for regular users
+        }
       } else {
         setError("Invalid response from server");
       }

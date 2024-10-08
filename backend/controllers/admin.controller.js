@@ -68,6 +68,7 @@ export const getUserDetails = async (req, res) => {
   }
 };
 
+
 //get user details by his id
 
 export const getUserDetailsById = async (req, res) => {
@@ -190,7 +191,7 @@ export const createAdminUser = async (req, res) => {
         address,
         phoneNumber,
         aadharNumber,
-        profilePhotoUrl: req.file ? req.file.path : null,
+        profilePhotoUrl: req.file ? req.file.path.replace(/\\/g, "/") : null,
         role: "admin", // Store the file path in the database
       });
 
@@ -205,40 +206,40 @@ export const createAdminUser = async (req, res) => {
   });
 };
 
-export const adminLogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
-    }
-    const user = await User.findOne({ email });
-    if (!user || user.role !== "admin") {
-      return res
-        .status(401)
-        .json({ message: "Invalid credentials or non-admin user" });
-    }
+// export const adminLogin = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     if (!email || !password) {
+//       return res
+//         .status(400)
+//         .json({ message: "Email and password are required" });
+//     }
+//     const user = await User.findOne({ email });
+//     if (!user || user.role !== "admin") {
+//       return res
+//         .status(401)
+//         .json({ message: "Invalid credentials or non-admin user" });
+//     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res.status(401).json({ message: "Invalid credentials" });
+//     }
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "15d",
-    });
-    const userObject = user.toObject();
-    delete userObject.password;
-    res.status(200).json({
-      message: "admin login successful",
-      user: userObject,
-      token: token,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+//     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+//       expiresIn: "15d",
+//     });
+//     const userObject = user.toObject();
+//     delete userObject.password;
+//     res.status(200).json({
+//       message: "admin login successful",
+//       user: userObject,
+//       token: token,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 
 
 
@@ -280,7 +281,7 @@ export const createCoupon = async (req, res) => {
 //deleting coupon by id
 
 export const deleteCouponById = async (req, res) => {
-  const {id} = req.body;
+  const { id } = req.params;
 
   try {
     const coupon = await Coupon.findByIdAndDelete(id);

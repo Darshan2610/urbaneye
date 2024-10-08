@@ -4,7 +4,7 @@ import User from "../models/User.model.js";
 export const getAllCoupons = async (req, res) => {
   try {
     const coupons = await Coupon.find({ isActive: true }).select(
-      "brand image description pointsRequired"
+      "brand image description pointsRequired promoCode"
     );
     res.status(200).json(coupons);
   } catch (error) {

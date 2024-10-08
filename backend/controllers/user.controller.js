@@ -4,6 +4,7 @@ import multer from "multer";
 import path from "path";
 import jwt from "jsonwebtoken"; // Add this import
 import nodemailer from "nodemailer";
+import Report from "../models/Report.model.js"; // Import the Report model
 
 // Set up multer for file uploads
 const storage = multer.diskStorage({
@@ -232,3 +233,68 @@ export const resetPassword = async (req, res) => {
 };
 
 //implement forgot password later
+
+export const getMyDetails = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate(
+      "redeemedCoupons.couponId"
+    ); // Populate redeemed coupons
+    const reports = await Report.find({ user: req.user._id }); // Fetch reports for the user
+
+    // Prepare the response
+    const userDetails = {
+      username: user.username,
+      email: user.email,
+      fullName: user.fullName,
+      address: user.address,
+      phoneNumber: user.phoneNumber,
+      aadharNumber: user.aadharNumber,
+      profilePhotoUrl: user.profilePhotoUrl,
+      points: user.points,
+      redeemedCoupons: user.redeemedCoupons.map((coupon) => ({
+        promoCode: coupon.couponId.promoCode, // Assuming promoCode is a field in the Coupon model
+        expiresAt: coupon.expiresAt,
+      })),
+      reportsPosted: reports.map((report) => ({
+        title: report.title,
+        status: report.status,
+      })),
+    };
+
+    res.status(200).json(userDetails);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "15d",
+    });
+
+    const userObject = user.toObject();
+    delete userObject.password;
+
+    res.status(200).json({
+      message: "Login successful",
+      user: userObject,
+      token,
+      role: user.role, // Include the role in the response
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

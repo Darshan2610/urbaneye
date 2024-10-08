@@ -18,10 +18,11 @@ export const AuthProvider = ({ children }) => {
     const storedUserId = localStorage.getItem("user");
     const storedRole = localStorage.getItem("role");
     const storedToken = localStorage.getItem("token");
+    const storedProfilePhotoUrl = localStorage.getItem("profilePhotoUrl");
 
     if (storedUserId && storedRole && storedToken) {
       return {
-        user: { _id: storedUserId },
+        user: { _id: storedUserId, profilePhotoUrl: storedProfilePhotoUrl },
         role: storedRole,
         token: storedToken,
       };
@@ -40,16 +41,18 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", auth.user._id);
       localStorage.setItem("role", auth.role);
       localStorage.setItem("token", auth.token);
+      localStorage.setItem("profilePhotoUrl", auth.user.profilePhotoUrl);
     } else {
       localStorage.removeItem("user");
       localStorage.removeItem("role");
       localStorage.removeItem("token");
+      localStorage.removeItem("profilePhotoUrl");
     }
   }, [auth]);
 
   // Memoized login function
   const login = useCallback((user, userRole, token) => {
-    console.log("Logging in user:", user);
+    console.log("Logging in user:");
     setAuth({ user, role: userRole, token });
   }, []);
 
