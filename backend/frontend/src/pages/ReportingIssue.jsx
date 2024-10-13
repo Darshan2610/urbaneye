@@ -90,7 +90,8 @@ const ReportingIssue = () => {
             type="file"
             multiple
             onChange={(e) => setImages([...e.target.files])}
-            className="file-input file-input-bordered w-full"
+            className="file-input file-input-bordered w-full bg-white text-blue-950"
+            placeholder="Upload Images "
           />
         </div>
         <button type="submit" className="btn btn-primary text-white mt-4">
