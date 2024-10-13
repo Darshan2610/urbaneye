@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { useLocation } from "react-router-dom";
-import axiosInstance from "../utils/axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
@@ -18,7 +18,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axiosInstance.post("/users/login", {
+      const response = await axios.post("/api/users/login", {
         email,
         password,
       });
@@ -34,7 +34,7 @@ const Login = () => {
 
         // Redirect based on user role
         if (response.data.user.role === 'admin') {
-          navigate("/admin/users"); // Redirect to admin dashboard
+          navigate("/api/admin/users"); // Redirect to admin dashboard
         } else {
           navigate("/"); // Redirect to home page or dashboard for regular users
         }

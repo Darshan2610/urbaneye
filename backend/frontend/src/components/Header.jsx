@@ -200,7 +200,7 @@ const Header = () => {
                       alt="User Avatar"
                       src={
                         auth.user && auth.user.profilePhotoUrl
-                          ? `http://localhost:5000/${auth.user.profilePhotoUrl}` // Ensure the URL is correct
+                          ? `/${auth.user.profilePhotoUrl}` // Ensure the URL is correct
                           : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" // Fallback image
                       }
                     />

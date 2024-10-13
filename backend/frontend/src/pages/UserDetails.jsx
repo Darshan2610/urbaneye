@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../utils/axios"; // Import your configured axios instance
+import axios from "axios"; // Import your configured axios instance
 import { useParams } from "react-router-dom"; // Import useParams to get the email from the URL
 
 const UserDetails = () => {
@@ -10,7 +10,7 @@ const UserDetails = () => {
   const fetchUserDetails = async () => {
     try {
       const token = localStorage.getItem("token"); // Get the token from local storage
-      const response = await axios.get(`/admin/user-details/${email}`, {
+      const response = await axios.get(`/api/admin/user-details/${email}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Include the token in the headers
         },
@@ -36,7 +36,7 @@ const UserDetails = () => {
       <h2 className="text-2xl font-bold mb-4">User Details</h2>
       <div className="bg-white border border-gray-300 rounded-lg p-4 shadow-md">
         <img
-          src={`http://localhost:5000/${userDetails.user.profilePhotoUrl}`}
+          src={`/${userDetails.user.profilePhotoUrl}`}
           alt="Profile"
           className="w-32 h-32 rounded-full mb-4"
         />

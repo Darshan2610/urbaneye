@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../utils/axios";
+import axios from "axios";
 
 const CouponManagement = () => {
   const [coupons, setCoupons] = useState([]);
@@ -15,7 +15,7 @@ const CouponManagement = () => {
   // Function to fetch coupons
   const fetchCoupons = async () => {
     try {
-      const response = await axios.get("/coupons"); // Adjust the endpoint as needed
+      const response = await axios.get("/api/coupons"); // Adjust the endpoint as needed
       setCoupons(response.data);
     } catch (error) {
       console.error("Error fetching coupons:", error);
@@ -28,7 +28,7 @@ const CouponManagement = () => {
       const token = localStorage.getItem("token"); // Fetch the token
 
       // Make the DELETE request with couponId in the URL
-      await axios.delete(`/admin/delete-coupon/${couponId}`, {
+      await axios.delete(`/api/admin/delete-coupon/${couponId}`, {
         headers: { Authorization: `Bearer ${token}` }, // Token in the headers
       });
 
@@ -52,7 +52,7 @@ const CouponManagement = () => {
 
       // Make the POST request to create a coupon
       await axios.post(
-        "/admin/create-coupon",
+        "/api/admin/create-coupon",
         newCoupon,
         { headers: { Authorization: `Bearer ${token}` } } // Token in the headers
       );

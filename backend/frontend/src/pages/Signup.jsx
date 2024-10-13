@@ -1,56 +1,59 @@
 import React, { useState } from "react";
-import axios from "../utils/axios";
+// Adjust the import based on your axios setup
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const CreateAdminUser = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    fullName: "",
-    address: "",
-    phoneNumber: "",
-    aadharNumber: "",
-    profilePhoto: null, // State for the profile photo
-  });
-
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profilePhoto") {
-      setFormData({ ...formData, profilePhoto: files[0] }); // Set the file for profile photo
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
+const Signup = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [aadharNumber, setAadharNumber] = useState("");
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token'); // Get the token from local storage
+    setError("");
 
-    // Create a FormData object to handle file upload
-    const data = new FormData();
-    for (const key in formData) {
-      data.append(key, formData[key]);
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("fullName", fullName);
+    formData.append("address", address);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("aadharNumber", aadharNumber);
+    if (profilePhoto) {
+      formData.append("profilePhoto", profilePhoto);
     }
 
     try {
-      const response = await axios.post("/admin/create-admin", data, {
+      const response = await axios.post("/users/register", formData, {
         headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the headers
-          "Content-Type": "multipart/form-data", // Set content type for file upload
+          "Content-Type": "multipart/form-data",
         },
       });
-      alert(response.data.message);
-      // console.log(response.data)
-    } catch (error) {
-      alert(error.response.data.message);
+
+      if (response.status === 201) {
+        // Redirect to login page on successful signup
+        navigate("/login");
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "An error occurred. Please try again."
+      );
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
-      <div className=" w-full space-y-8 p-10  bg-white rounded-xl shadow-md">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create Admin User
+          Sign up for an account
         </h2>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
@@ -65,8 +68,8 @@ const CreateAdminUser = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Username"
-                value={formData.username}
-                onChange={handleChange}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div>
@@ -80,8 +83,8 @@ const CreateAdminUser = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -95,8 +98,8 @@ const CreateAdminUser = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div>
@@ -110,8 +113,8 @@ const CreateAdminUser = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Full Name"
-                value={formData.fullName}
-                onChange={handleChange}
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
               />
             </div>
             <div>
@@ -125,8 +128,8 @@ const CreateAdminUser = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Address"
-                value={formData.address}
-                onChange={handleChange}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div>
@@ -140,8 +143,8 @@ const CreateAdminUser = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Phone Number"
-                value={formData.phoneNumber}
-                onChange={handleChange}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
             <div>
@@ -155,8 +158,8 @@ const CreateAdminUser = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Aadhar Number"
-                value={formData.aadharNumber}
-                onChange={handleChange}
+                value={aadharNumber}
+                onChange={(e) => setAadharNumber(e.target.value)}
               />
             </div>
             <div>
@@ -168,18 +171,21 @@ const CreateAdminUser = () => {
                 name="profilePhoto"
                 type="file"
                 required
+                placeholder="Profile Photo"
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                onChange={handleChange}
+                onChange={(e) => setProfilePhoto(e.target.files[0])}
               />
             </div>
           </div>
+
+          {error && <div className="text-red-500 text-sm">{error}</div>}
 
           <div>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Create Admin
+              Sign up
             </button>
           </div>
         </form>
@@ -188,4 +194,4 @@ const CreateAdminUser = () => {
   );
 };
 
-export default CreateAdminUser;
+export default Signup;

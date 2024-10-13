@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../utils/axios";
+import axios from "axios";
 
 const ReportManagement = () => {
   const [reports, setReports] = useState([]);
@@ -11,7 +11,7 @@ const ReportManagement = () => {
     const fetchReports = async () => {
       const token = localStorage.getItem("token"); // Get the token from local storage
       try {
-        const response = await axios.get("/admin/allreports", {
+        const response = await axios.get("/api/admin/allreports", {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token in the headers
           },
@@ -36,7 +36,7 @@ const ReportManagement = () => {
     const token = localStorage.getItem("token"); // Get the token from local storage
     try {
       const response = await axios.patch(
-        `/admin/update-report-status/${reportId}`,
+        `/api/admin/update-report-status/${reportId}`,
         { status: status[reportId] }, // Send the selected status
         {
           headers: {
@@ -119,7 +119,7 @@ const ReportManagement = () => {
               <strong>Image:</strong>
               {report.imageUrls.length > 0 && (
                 <img
-                  src={`http://localhost:5000/${report.imageUrls[0]}`} // Correctly construct the URL
+                  src={`/${report.imageUrls[0]}`} // Correctly construct the URL
                   alt={`Report Image`}
                   className="w-32 h-32 object-cover mb-2"
                 />

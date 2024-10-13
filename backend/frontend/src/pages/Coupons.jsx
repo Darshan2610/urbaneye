@@ -16,7 +16,7 @@ const Coupons = () => {
   useEffect(() => {
     const getCoupons = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/coupons");
+        const res = await axios.get("/api/coupons");
         setCoupons(res.data);
       } catch (error) {
         console.log(error.message);
@@ -26,7 +26,7 @@ const Coupons = () => {
     const getUserDetails = async () => {
       if (auth.user) {
         try {
-          const res = await axios.get("http://localhost:5000/api/users/me", {
+          const res = await axios.get("/api/users/me", {
             headers: {
               Authorization: `Bearer ${auth.token}`,
             },
@@ -54,7 +54,7 @@ const Coupons = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/coupons/${selectedCoupon._id}/redeem`,
+        `/api/coupons/${selectedCoupon._id}/redeem`,
         {},
         {
           headers: {

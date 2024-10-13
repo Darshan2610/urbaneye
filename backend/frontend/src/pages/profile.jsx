@@ -9,7 +9,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/users/me", {
+        const res = await axios.get("/api/users/me", {
           headers: {
             Authorization: `Bearer ${auth.token}`,
           },
@@ -36,7 +36,7 @@ const Profile = () => {
             className="w-24 h-24 rounded-full mr-4"
             src={
               userDetails.profilePhotoUrl
-                ? `http://localhost:5000/${userDetails.profilePhotoUrl}`
+                ? `/${userDetails.profilePhotoUrl}`
                 : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
             }
             alt="User Avatar"

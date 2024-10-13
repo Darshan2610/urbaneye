@@ -31,7 +31,7 @@ const ReportingIssue = () => {
     });
 
     try {
-      const response = await axios.post('http://localhost:5000/api/reports', formData, {
+      const response = await axios.post('/api/reports', formData, {
         headers: {
           Authorization: `Bearer ${auth.token}`,
           'Content-Type': 'multipart/form-data',

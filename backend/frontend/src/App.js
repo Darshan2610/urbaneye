@@ -8,7 +8,7 @@ import Signup from "./pages/Signup"; // Import Signup
 import Coupons from "./pages/Coupons";
 import ReportingIssue from "./pages/ReportingIssue";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile";
 import AdminDashboard from "./pages/AdminDashBoard"; // Import Admin Dashboard
 import UserDetails from "./pages/UserDetails";
 import Footer from "./components/Footer";
@@ -27,7 +27,6 @@ function App() {
           
           <Route
             path="/report-issue"
-            exact
             element={
               <ProtectedRoute>
                 <ReportingIssue />
@@ -35,8 +34,7 @@ function App() {
             }
           />
           <Route
-            path="/profile"
-            exact
+            path="/profile" 
             element={
               <ProtectedRoute>
                 <Profile />

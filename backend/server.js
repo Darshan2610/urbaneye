@@ -21,7 +21,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 dotenv.config();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3001", // Allow only your frontend origin
+    credentials: true, // Allow cookies and credentials
+  })
+);
 app.use(
   "/uploads/user_profile",
   express.static(path.join(__dirname, "uploads/user_profile"))
@@ -30,7 +35,7 @@ app.use(
   "/uploads/report_photo",
   express.static(path.join(__dirname, "uploads/report_photo"))
 ); // Serve report images statically
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/idea";
+const MONGODB_URI = process.env.MONGODB_URI;
 // Connect to MongoDB
 
 mongoose
@@ -46,6 +51,14 @@ app.use("/api/users", userRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/coupons", couponRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  const dirPath = path.resolve();
+  app.use(express.static(path.join(__dirname, "frontend/build"))); // Change 'dist' to 'build'
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(dirPath, "frontend", "build", "index.html")); // Change 'dist' to 'build'
+  });
+}
 
 // Start server
 const PORT = process.env.PORT || 4000;

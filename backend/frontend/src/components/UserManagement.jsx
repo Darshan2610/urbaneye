@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../utils/axios"; // Import your configured axios instance
+import axios from "axios"; // Import your configured axios instance
 import { Link } from "react-router-dom"; // Import Link for navigation
 
 const UserManagement = () => {
@@ -9,7 +9,7 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token'); // Get the token from local storage
-      const response = await axios.get('/admin/allusers', { // Use the axios instance
+      const response = await axios.get('/api/admin/allusers', { // Use the axios instance
         headers: {
           Authorization: `Bearer ${token}`, // Include the token in the headers
         },
@@ -55,7 +55,7 @@ const UserManagement = () => {
             <tr key={user._id} className="hover:bg-gray-100">
               <td className="py-2 px-4 border-b">{user.username}</td>
               <td className="py-2 px-4 border-b">
-                <Link to={`/admin/user-details/${user.email}`} className="text-blue-500 hover:underline">
+                <Link to={`/api/admin/user-details/${user.email}`} className="text-blue-500 hover:underline">
                   {user.email}
                 </Link>
               </td>
