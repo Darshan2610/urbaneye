@@ -23,7 +23,7 @@ dotenv.config();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3001", // Allow only your frontend origin
+    origin: "https://urbaneye.onrender.com/", // Allow only your frontend origin
     credentials: true, // Allow cookies and credentials
   })
 );
