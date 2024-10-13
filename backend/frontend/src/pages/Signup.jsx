@@ -13,11 +13,13 @@ const Signup = () => {
   const [aadharNumber, setAadharNumber] = useState("");
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Step 1: Add loading state
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("username", username);
@@ -39,6 +41,7 @@ const Signup = () => {
       });
 
       if (response.status === 201) {
+        alert("Signup successful");
         // Redirect to login page on successful signup
         navigate("/login");
       }
@@ -46,6 +49,8 @@ const Signup = () => {
       setError(
         err.response?.data?.message || "An error occurred. Please try again."
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -179,7 +184,11 @@ const Signup = () => {
           </div>
 
           {error && <div className="text-red-500 text-sm">{error}</div>}
-
+          {loading && ( // Step 3: Conditional rendering of spinner
+            <div className="flex justify-center">
+              <span className="loading loading-spinner loading-lg"></span>
+            </div>
+          )}
           <div>
             <button
               type="submit"
