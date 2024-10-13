@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRou
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashBoard"; // Import Admin Dashboard
 import UserDetails from "./pages/UserDetails";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -18,14 +19,15 @@ function App() {
       <AuthProvider>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/coupons" element={<Coupons />} />
-          <Route path="/admin/user-details/:email" element={<UserDetails />} />
+          <Route path="/" exact element={<Home />} />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/signup" exact element={<Signup />} />
+          <Route path="/coupons" exact element={<Coupons />} />
+          <Route path="/admin/user-details/:email" exact element={<UserDetails />} />
           
           <Route
             path="/report-issue"
+            exact
             element={
               <ProtectedRoute>
                 <ReportingIssue />
@@ -34,18 +36,20 @@ function App() {
           />
           <Route
             path="/profile"
+            exact
             element={
               <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
             }
           />
-          <Route path="/admin/*" element={
+          <Route path="/admin/*" exact element={
             <ProtectedRoute adminOnly>
               <AdminDashboard />
             </ProtectedRoute>
           } /> {/* Admin Dashboard Route */}
         </Routes>
+        <Footer />
       </AuthProvider>
     </Router>
   );

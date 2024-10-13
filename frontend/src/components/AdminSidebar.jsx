@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"; // Import NavLink
 
 const AdminSidebar = () => {
   return (
-    <div className="w-64 fixed left-0  bg-gray-800 text-white h-screen">
+    <div className="w-64 fixed left-0  bg-gray-800 text-white h-3/5">
       <h2 className="text-2xl p-4">Admin Panel</h2>
       <ul className="space-y-2">
         <li>

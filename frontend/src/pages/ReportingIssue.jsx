@@ -49,7 +49,7 @@ const ReportingIssue = () => {
   };
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto md:px-20 px-4 bg-white text-blue-950 pt-10 pb-5 ">
       <h1 className="text-2xl font-bold">Report an Issue</h1>
       <form onSubmit={handleSubmit} className="mt-4">
         <div>
@@ -90,7 +90,9 @@ const ReportingIssue = () => {
             className="file-input file-input-bordered w-full"
           />
         </div>
-        <button type="submit" className="btn btn-primary mt-4">Submit Report</button>
+        <button type="submit" className="btn btn-primary text-white mt-4">
+          Submit Report
+        </button>
       </form>
     </div>
   );

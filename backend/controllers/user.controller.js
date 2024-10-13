@@ -251,10 +251,13 @@ export const getMyDetails = async (req, res) => {
       aadharNumber: user.aadharNumber,
       profilePhotoUrl: user.profilePhotoUrl,
       points: user.points,
-      redeemedCoupons: user.redeemedCoupons.map((coupon) => ({
-        promoCode: coupon.couponId.promoCode, // Assuming promoCode is a field in the Coupon model
-        expiresAt: coupon.expiresAt,
-      })),
+      // Use filter and check if couponId is present
+      redeemedCoupons: user.redeemedCoupons
+        .filter((coupon) => coupon.couponId) // Only include coupons with valid couponId
+        .map((coupon) => ({
+          promoCode: coupon.couponId.promoCode, // Assuming promoCode is a field in the Coupon model
+          expiresAt: coupon.expiresAt,
+        })),
       reportsPosted: reports.map((report) => ({
         title: report.title,
         status: report.status,
@@ -266,6 +269,7 @@ export const getMyDetails = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 export const login = async (req, res) => {
   try {

@@ -16,8 +16,10 @@ const Profile = () => {
         });
         setUserDetails(res.data);
       } catch (error) {
-        console.log(error.message);
+        console.error(error.response?.data?.message || error.message);
+        alert("An error occurred while fetching user details.");
       }
+
     };
 
     fetchUserDetails();
@@ -64,10 +66,13 @@ const Profile = () => {
         </div>
         <div className="border-t border-gray-300 pt-4">
           <h3 className="text-xl font-semibold">Redeemed Coupons</h3>
-          {userDetails.redeemedCoupons.length > 0 ? (
+          {userDetails.redeemedCoupons &&
+          userDetails.redeemedCoupons.length > 0 ? (
             userDetails.redeemedCoupons.map((coupon, index) => (
               <p key={index}>
-                <strong>Promo Code:</strong> {coupon.promoCode} | <strong>Expires At:</strong> {new Date(coupon.expiresAt).toLocaleDateString()}
+                <strong>Promo Code:</strong> {coupon.promoCode} |
+                <strong>Expires At:</strong>{" "}
+                {new Date(coupon.expiresAt).toLocaleDateString()}
               </p>
             ))
           ) : (
@@ -79,7 +84,8 @@ const Profile = () => {
           {userDetails.reportsPosted.length > 0 ? (
             userDetails.reportsPosted.map((report, index) => (
               <p key={index}>
-                <strong>Title:</strong> {report.title} | <strong>Status:</strong> {report.status}
+                <strong>Title:</strong> {report.title} |{" "}
+                <strong>Status:</strong> {report.status}
               </p>
             ))
           ) : (

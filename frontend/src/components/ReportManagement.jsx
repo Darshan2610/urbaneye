@@ -63,7 +63,7 @@ const ReportManagement = () => {
 
   return (
     <div>
-      <h2 className="text-xl mb-4">View Reports</h2>
+      <h2 className="text-2xl mb-4 pt-5">View Reports</h2>
 
       {/* Buttons to filter reports */}
       <div className="mb-4">

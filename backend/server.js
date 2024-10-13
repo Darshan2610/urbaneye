@@ -21,10 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 dotenv.config();
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:3001', // Your frontend URL
-  credentials: true
-}));
+app.use(cors());
 app.use(
   "/uploads/user_profile",
   express.static(path.join(__dirname, "uploads/user_profile"))
