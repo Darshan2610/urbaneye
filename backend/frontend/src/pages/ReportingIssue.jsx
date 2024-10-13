@@ -59,7 +59,8 @@ const ReportingIssue = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="input input-bordered w-full"
+            className="input input-bordered w-full bg-white text-blue-950"
+            placeholder="Enter the title of the issue"
           />
         </div>
         <div className="mt-4">
@@ -68,7 +69,8 @@ const ReportingIssue = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            className="textarea textarea-bordered w-full"
+            className="textarea textarea-bordered w-full bg-white text-blue-950"
+            placeholder="Enter the description of the issue"
           />
         </div>
         <div className="mt-4">
@@ -78,7 +80,8 @@ const ReportingIssue = () => {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             required
-            className="input input-bordered w-full"
+            className="input input-bordered w-full bg-white text-blue-950"
+            placeholder="Enter the location of the issue"
           />
         </div>
         <div className="mt-4">
