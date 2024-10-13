@@ -25,7 +25,13 @@ const Profile = () => {
     fetchUserDetails();
   }, [auth.token]);
 
-  if (!userDetails) return <div>Loading...</div>;
+   if (!userDetails) {
+     return (
+       <div className="flex justify-center items-center min-h-screen">
+         <span className="loading loading-spinner loading-lg"></span>
+       </div>
+     );
+   }
 
   return (
     <div className="container mx-auto mt-10 p-5">
