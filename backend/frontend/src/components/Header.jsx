@@ -30,7 +30,7 @@ const Header = () => {
       <div className="container mx-auto mb-[80px]">
         <div
           className={`navbar px-5 fixed top-0 left-0 right-0 z-50 pt-2 pb-2  transition-all duration-300 
-          ${scrolling ? "bg-blue-950 text-white" : ""}`}
+          ${scrolling ? "bg-blue-950 text-white" : "bg-white"}`}
         >
           <div className="navbar-start pr-2">
             <div className="dropdown">
@@ -215,7 +215,7 @@ const Header = () => {
               </Link>
             </div>
           ) : (
-            <div className="navbar-end space-x-3">
+            <div className="navbar-end space-x-2">
               <NavLink
                 to="/signup"
                 className={({ isActive }) =>

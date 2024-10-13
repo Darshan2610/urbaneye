@@ -21,7 +21,7 @@ const Home = () => {
               Join the Citizen Movement in Bengaluru{" "}
             </h1>
             <p className="text-sm md:text-xl text-blue-950 pb-5">
-              <span className="font-bold text-accent text-2xl">UrbanEye</span>{" "}
+              <span className="font-bold text-pink-500 text-2xl">UrbanEye</span>{" "}
               is a crowdsourced platform for citizens to report local issues,
               track their status, and contribute to community improvement.
               Empowering people to make their city better, UrbanEye rewards
@@ -33,7 +33,7 @@ const Home = () => {
             className={({ isActive }) =>
               isActive
                 ? "btn text-lg bg-blue-950 text-white"
-                : "btn text-lg hover:bg-blue-950 hover:text-white bg-accent text-white"
+                : "btn text-lg hover:bg-blue-950 hover:text-white bg-pink-500 text-white"
             }
           >
             Get Started
