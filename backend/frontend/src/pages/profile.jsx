@@ -41,12 +41,12 @@ const Profile = () => {
           <img
             className="w-24 h-24 rounded-full mr-4"
             src={
-              userDetails.profilePhotoUrl
-                ? `/${userDetails.profilePhotoUrl}`
-                : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              userDetails.profilePhotoUrl ||
+              "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
             }
             alt="User Avatar"
           />
+
           <div>
             <h2 className="text-2xl font-semibold">{userDetails.fullName}</h2>
             <p className="text-gray-600">{userDetails.email}</p>
