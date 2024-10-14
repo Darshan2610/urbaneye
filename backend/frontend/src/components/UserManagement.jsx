@@ -55,7 +55,7 @@ const UserManagement = () => {
             <tr key={user._id} className="hover:bg-gray-100">
               <td className="py-2 px-4 border-b">{user.username}</td>
               <td className="py-2 px-4 border-b">
-                <Link to={`/api/admin/user-details/${user.email}`} className="text-blue-500 hover:underline">
+                <Link to={`/admin/user-details/${user.email}`} className="text-blue-500 hover:underline">
                   {user.email}
                 </Link>
               </td>
