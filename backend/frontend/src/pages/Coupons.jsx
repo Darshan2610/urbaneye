@@ -105,7 +105,7 @@ const Coupons = () => {
               <figure
                 style={{
                   width: "100%", // Set a fixed width
-                  height: "100%", // Set a fixed height
+                  height: "50%", // Set a fixed height
                   objectFit: "cover",
                   // Cover the area without stretching
                 }}
