@@ -6,7 +6,7 @@ const Header = () => {
   const { auth, logout } = useAuth();
 
   // Check if the user is an admin
-  const isAdmin = auth.user && auth.user.role === "admin"; // Assuming 'admin' is the role identifier
+  const isAdmin = auth.user && auth.user.role === "admin";
   const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
@@ -29,10 +29,12 @@ const Header = () => {
     <>
       <div className="container mx-auto mb-[80px]">
         <div
-          className={`navbar px-5 fixed top-0 left-0 right-0 z-50 pt-2 pb-2  transition-all duration-300 
-          ${scrolling ? "bg-blue-950 text-white" : "bg-white"}`}
+          className={`navbar px-5 fixed top-0 left-0 right-0 z-50 pt-2 pb-2 flex items-center justify-between transition-all duration-300 ${
+            scrolling ? "bg-blue-950 text-white" : ""
+          }`}
         >
-          <div className="navbar-start pr-2">
+          {/* Navbar Start (Logo + Hamburger) */}
+          <div className="navbar-start flex items-center space-x-3">
             <div className="dropdown">
               <div
                 tabIndex={0}
@@ -41,7 +43,7 @@ const Header = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -58,23 +60,19 @@ const Header = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
               >
-                {/* Render different links based on user role */}
                 {isAdmin ? (
-                  <>
-                    <li>
-                      <NavLink
-                        to="/admin/dashboard"
-                        className={({ isActive }) =>
-                          isActive
-                            ? "text-md bg-blue-950 text-white"
-                            : "text-md hover:bg-blue-950 hover:text-white"
-                        }
-                      >
-                        Admin Dashboard
-                      </NavLink>
-                    </li>
-                    {/* Add more admin-specific links here if needed */}
-                  </>
+                  <li>
+                    <NavLink
+                      to="/admin/dashboard"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-md bg-blue-950 text-white"
+                          : "text-md hover:bg-blue-950 hover:text-white"
+                      }
+                    >
+                      Admin Dashboard
+                    </NavLink>
+                  </li>
                 ) : (
                   <>
                     <li>
@@ -117,127 +115,70 @@ const Header = () => {
                 )}
               </ul>
             </div>
-            <Link to="/" className=" ">
+            <Link to="/" className="pl-0">
               <img
                 src="/logo2.png"
                 alt="logo"
-                className=" w-15 h-8 sm:w-15 sm:h-8 md:w-30 md:h-9 lg:w-25 lg:h-10"
+                className="w-15 h-8 sm:w-15 sm:h-8 md:w-30 md:h-9 lg:w-25 lg:h-10 pl-0 ml-0"
               />
             </Link>
           </div>
-          <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
-              {/* Render different links based on user role */}
-              {isAdmin ? (
-                <>
-                  <li>
-                    <NavLink
-                      to="/admin/dashboard"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "btn btn-ghost text-xl bg-blue-950 text-white"
-                          : "btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
-                      }
-                    >
-                      Admin Dashboard
-                    </NavLink>
-                  </li>
-                  {/* Add more admin-specific links here if needed */}
-                </>
-              ) : (
-                <>
-                  <li>
-                    <NavLink
-                      to="/"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "btn btn-ghost text-xl bg-blue-950 text-white"
-                          : "btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
-                      }
-                    >
-                      Home
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/coupons"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "btn btn-ghost text-xl bg-blue-950 text-white"
-                          : "btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
-                      }
-                    >
-                      Coupons
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/report-issue"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "btn btn-ghost text-xl bg-blue-950 text-white"
-                          : "btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
-                      }
-                    >
-                      Report Issue
-                    </NavLink>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
-          {auth.user ? (
-            <div className="navbar-end space-x-3">
-              <div className="dropdown dropdown-end">
+
+          {/* Navbar End (Login/Register Buttons) */}
+          <div className="navbar-end flex items-center space-x-3">
+            {auth.user ? (
+              <>
+                <div className="dropdown dropdown-end">
+                  <Link
+                    to="/profile"
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="User Avatar"
+                        src={
+                          auth.user.profilePhotoUrl
+                            ? `http://localhost:5000/${auth.user.profilePhotoUrl}`
+                            : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                        }
+                      />
+                    </div>
+                  </Link>
+                </div>
                 <Link
-                  to="/profile" // Redirect to profile page on avatar click
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar"
+                  onClick={logout}
+                  className="btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
                 >
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="User Avatar"
-                      src={
-                        auth.user && auth.user.profilePhotoUrl
-                          ? `/${auth.user.profilePhotoUrl}` // Ensure the URL is correct
-                          : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" // Fallback image
-                      }
-                    />
-                  </div>
+                  Logout
                 </Link>
-              </div>
-              <Link
-                onClick={logout}
-                className="btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
-              >
-                Logout
-              </Link>
-            </div>
-          ) : (
-            <div className="navbar-end space-x-2">
-              <NavLink
-                to="/signup"
-                className={({ isActive }) =>
-                  isActive
-                    ? "btn text-lg bg-blue-950 text-white"
-                    : "btn text-lg hover:bg-blue-950 hover:text-white"
-                }
-              >
-                Register
-              </NavLink>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive
-                    ? "btn text-lg bg-blue-950 text-white"
-                    : "btn text-lg hover:bg-blue-950 hover:text-white"
-                }
-              >
-                Login
-              </NavLink>
-            </div>
-          )}
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/signup"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "btn text-md sm:text-sm lg:text-lg bg-blue-950 text-white px-3 py-2"
+                      : "btn text-md sm:text-sm lg:text-lg hover:bg-blue-950 hover:text-white px-3 py-2"
+                  }
+                >
+                  Register
+                </NavLink>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "btn text-md sm:text-sm lg:text-lg bg-blue-950 text-white px-3 py-2"
+                      : "btn text-md sm:text-sm lg:text-lg hover:bg-blue-950 hover:text-white px-3 py-2"
+                  }
+                >
+                  Login
+                </NavLink>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>
