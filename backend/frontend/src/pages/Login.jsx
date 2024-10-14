@@ -11,11 +11,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); // Step 1: Add loading state
+  
   const { login } = useAuth();
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const response = await axios.post("/api/users/login", {
@@ -45,6 +49,8 @@ const Login = () => {
       setError(
         err.response?.data?.message || "An error occurred. Please try again."
       );
+    } finally {
+      setLoading(false); // Step 2: Set loading to false after request
     }
   };
 
@@ -93,7 +99,11 @@ const Login = () => {
           </div>
 
           {error && <div className="text-red-500 text-sm">{error}</div>}
-
+          {loading && ( // Step 3: Conditional rendering of spinner
+            <div className="flex justify-center">
+              <span className="loading loading-spinner loading-lg"></span>
+            </div>
+          )}
           <div>
             <button
               type="submit"
