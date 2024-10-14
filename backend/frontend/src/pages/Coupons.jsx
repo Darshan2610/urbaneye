@@ -100,7 +100,7 @@ const Coupons = () => {
           {coupons.map((item) => (
             <div
               key={item._id}
-              className="card w-92 bg-base-100 shadow-lg shadow-primary-content hover:scale-105 duration-200 dark:bg-slate-900 dark:text-white dark:border"
+              className="card w-92 bg-base-100 shadow-lg shadow-primary-content hover:scale-105 duration-200 "
             >
               <figure
                 style={{
@@ -112,8 +112,8 @@ const Coupons = () => {
               >
                 <img src={item.image} alt="Coupons"  />
               </figure>
-              <div className="card-body">
-                <h2 className="card-title text-2xl font-bold text-blue-950">
+              <div className="card-body bg-white">
+                <h2 className="card-title text-2xl font-bold text-blue-950 bg-white">
                   {item.brand}
                 </h2>
                 <p className="text-md">{item.description}</p>

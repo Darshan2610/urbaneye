@@ -30,7 +30,7 @@ const Header = () => {
       <div className="container mx-auto mb-[80px]">
         <div
           className={`navbar px-5 fixed top-0 left-0 right-0 z-50 pt-2 pb-2 flex items-center justify-between transition-all duration-300 ${
-            scrolling ? "bg-blue-950 text-white" : ""
+            scrolling ? "bg-blue-950 text-white" : " bg-white text-blue-950"
           }`}
         >
           {/* Navbar Start (Logo + Hamburger) */}
@@ -58,7 +58,7 @@ const Header = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow  rounded-box w-52"
               >
                 {isAdmin ? (
                   <li>
@@ -140,7 +140,7 @@ const Header = () => {
                         alt="User Avatar"
                         src={
                           auth.user.profilePhotoUrl
-                            ? `http://localhost:5000/${auth.user.profilePhotoUrl}`
+                            ? `/${auth.user.profilePhotoUrl}`
                             : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                         }
                       />
@@ -149,7 +149,7 @@ const Header = () => {
                 </div>
                 <Link
                   onClick={logout}
-                  className="btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
+                  className="btn btn-ghost text-xl  hover:bg-blue-950 hover:text-white"
                 >
                   Logout
                 </Link>

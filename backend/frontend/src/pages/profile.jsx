@@ -41,8 +41,9 @@ const Profile = () => {
           <img
             className="w-24 h-24 rounded-full mr-4"
             src={
-              userDetails.profilePhotoUrl ||
-              "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              userDetails.profilePhotoUrl
+                ? `/${userDetails.profilePhotoUrl}`
+                : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
             }
             alt="User Avatar"
           />

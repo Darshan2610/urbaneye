@@ -55,7 +55,7 @@ const Home = () => {
           {cardData.map((card) => (
             <div
               key={card.id}
-              className="card card-compact bg-base-100 w-full shadow-xl hover:scale-105 duration-200 dark:bg-slate-900 dark:text-white dark:border"
+              className="card card-compact w-full shadow-xl hover:scale-105 duration-200 bg-blue-950 text-white"
             >
               <figure>
                 <img src={card.imgSrc} alt={card.title} />
