@@ -6,7 +6,7 @@ const Header = () => {
   const { auth, logout } = useAuth();
 
   // Check if the user is an admin
-  const isAdmin = auth.user && auth.user.role === "admin";
+  const isAdmin = auth.user && auth.user.role === "admin"; // Assuming 'admin' is the role identifier
   const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,6 @@ const Header = () => {
             scrolling ? "bg-blue-950 text-white" : ""
           }`}
         >
-          {/* Navbar Start (Logo + Hamburger) */}
           <div className="navbar-start flex items-center space-x-3">
             <div className="dropdown">
               <div
@@ -115,70 +114,127 @@ const Header = () => {
                 )}
               </ul>
             </div>
-            <Link to="/" className="pl-0">
+            <Link to="/" className="pl-0 ml-0">
               <img
                 src="/logo2.png"
                 alt="logo"
-                className="w-15 h-8 sm:w-15 sm:h-8 md:w-30 md:h-9 lg:w-25 lg:h-10 pl-0 ml-0"
+                className="w-15 h-8 sm:w-15 sm:h-8 md:w-30 md:h-9 lg:w-25 lg:h-10"
               />
             </Link>
           </div>
-
-          {/* Navbar End (Login/Register Buttons) */}
-          <div className="navbar-end flex items-center space-x-3">
-            {auth.user ? (
-              <>
-                <div className="dropdown dropdown-end">
-                  <Link
-                    to="/profile"
-                    tabIndex={0}
-                    role="button"
-                    className="btn btn-ghost btn-circle avatar"
-                  >
-                    <div className="w-10 rounded-full">
-                      <img
-                        alt="User Avatar"
-                        src={
-                          auth.user.profilePhotoUrl
-                            ? `http://localhost:5000/${auth.user.profilePhotoUrl}`
-                            : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                        }
-                      />
-                    </div>
-                  </Link>
-                </div>
-                <Link
-                  onClick={logout}
-                  className="btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
-                >
-                  Logout
-                </Link>
-              </>
-            ) : (
-              <>
-                <NavLink
-                  to="/signup"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "btn text-md sm:text-sm lg:text-lg bg-blue-950 text-white px-3 py-2"
-                      : "btn text-md sm:text-sm lg:text-lg hover:bg-blue-950 hover:text-white px-3 py-2"
-                  }
-                >
-                  Register
-                </NavLink>
-                <NavLink
-                  to="/login"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "btn text-md sm:text-sm lg:text-lg bg-blue-950 text-white px-3 py-2"
-                      : "btn text-md sm:text-sm lg:text-lg hover:bg-blue-950 hover:text-white px-3 py-2"
-                  }
-                >
-                  Login
-                </NavLink>
-              </>
-            )}
+          <div className="navbar-center hidden lg:flex">
+            <ul className="menu menu-horizontal px-1">
+              {/* Render different links based on user role */}
+              {isAdmin ? (
+                <>
+                  <li>
+                    <NavLink
+                      to="/admin/dashboard"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "btn btn-ghost text-xl bg-blue-950 text-white"
+                          : "btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
+                      }
+                    >
+                      Admin Dashboard
+                    </NavLink>
+                  </li>
+                  {/* Add more admin-specific links here if needed */}
+                </>
+              ) : (
+                <>
+                  <li>
+                    <NavLink
+                      to="/"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "btn btn-ghost text-xl bg-blue-950 text-white"
+                          : "btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
+                      }
+                    >
+                      Home
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/coupons"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "btn btn-ghost text-xl bg-blue-950 text-white"
+                          : "btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
+                      }
+                    >
+                      Coupons
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/report-issue"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "btn btn-ghost text-xl bg-blue-950 text-white"
+                          : "btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
+                      }
+                    >
+                      Report Issue
+                    </NavLink>
+                  </li>
+                </>
+              )}
+            </ul>
           </div>
+          {auth.user ? (
+            <div className="navbar-end flex items-center space-x-3">
+              <div className="dropdown dropdown-end">
+                <Link
+                  to="/profile" // Redirect to profile page on avatar click
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="User Avatar"
+                      src={
+                        auth.user && auth.user.profilePhotoUrl
+                          ? `/${auth.user.profilePhotoUrl}` // Ensure the URL is correct
+                          : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" // Fallback image
+                      }
+                    />
+                  </div>
+                </Link>
+              </div>
+              <Link
+                onClick={logout}
+                className="btn btn-ghost text-xl hover:bg-blue-950 hover:text-white"
+              >
+                Logout
+              </Link>
+            </div>
+          ) : (
+            <div className="navbar-end space-x-2">
+              <NavLink
+                to="/signup"
+                className={({ isActive }) =>
+                  isActive
+                    ? "btn text-md sm:text-sm lg:text-lg bg-blue-950 text-white px-3 py-2"
+                    : "btn text-md sm:text-sm lg:text-lg hover:bg-blue-950 hover:text-white px-3 py-2"
+                }
+              >
+                Register
+              </NavLink>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive
+                    ? "btn text-md sm:text-sm lg:text-lg bg-blue-950 text-white px-3 py-2"
+                    : "btn text-md sm:text-sm lg:text-lg hover:bg-blue-950 hover:text-white px-3 py-2"
+                }
+              >
+                Login
+              </NavLink>
+            </div>
+          )}
         </div>
       </div>
     </>
