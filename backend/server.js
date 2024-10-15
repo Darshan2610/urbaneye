@@ -61,6 +61,15 @@ app.get("/api/check-images", (req, res) => {
     res.json(files);
   });
 });
+app.get("/api/check-report-img", (req, res) => {
+  const dirPath = path.join(__dirname, "uploads/report_photo");
+  fs.readdir(dirPath, (err, files) => {
+    if (err) {
+      return res.status(500).json({ error: "Unable to scan directory" });
+    }
+    res.json(files);
+  });
+});
 
 if (process.env.NODE_ENV === "production") {
   const dirPath = path.resolve();
