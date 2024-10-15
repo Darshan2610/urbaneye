@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 // Handle file upload
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024 * 1024 * 8 }, // 5MB file limit
+  limits: { fileSize: 1024 * 1024 * 8 }, // 8MB file limit
   fileFilter: (req, file, cb) => {
     const fileTypes = /jpeg|jpg|png|heic/;
     const extname = fileTypes.test(
@@ -43,7 +43,7 @@ export const userRegister = async (req, res) => {
     if (err) {
       return res.status(400).json({ message: err.message });
     }
-
+    console.log("Uploaded file:", req.file);
     // Make sure req.body is being parsed correctly
     const {
       username,
