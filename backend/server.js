@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import cors from "cors";
 import bodyParser from "body-parser";
 import couponRoutes from "./routes/coupon.route.js";
+import fs from "fs";
 
 // Configurations for path (if using ES modules)
 const __filename = fileURLToPath(import.meta.url);
@@ -51,6 +52,15 @@ app.use("/api/users", userRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/coupons", couponRoutes);
+app.get("/api/check-images", (req, res) => {
+  const dirPath = path.join(__dirname, "uploads/user_profile");
+  fs.readdir(dirPath, (err, files) => {
+    if (err) {
+      return res.status(500).json({ error: "Unable to scan directory" });
+    }
+    res.json(files);
+  });
+});
 
 if (process.env.NODE_ENV === "production") {
   const dirPath = path.resolve();
