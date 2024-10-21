@@ -38,7 +38,7 @@ const Login = () => {
 
         // Redirect based on user role
         if (response.data.user.role === 'admin') {
-          navigate("/api/admin/users"); // Redirect to admin dashboard
+          navigate("/api/admin/dashboard"); // Redirect to admin dashboard
         } else {
           navigate("/"); // Redirect to home page or dashboard for regular users
         }
