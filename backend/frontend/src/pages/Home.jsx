@@ -49,8 +49,8 @@ const Home = () => {
       </div>
 
       {/* cards */}
-      <div className="max-w-screen-xl container mx-auto md:px-20 px-4 pt-10 pb-10 bg-yellow-50">
-        <div className="mt-4 my-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
+      <div className="max-w-screen-xl container mx-auto md:px-20 px-4 pt-10 pb-10 bg-yellow-50 text-white">
+        <div className="mt-4 my-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 text-white">
           {/* Dynamically rendering multiple cards */}
           {cardData.map((card) => (
             <div

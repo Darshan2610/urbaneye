@@ -80,7 +80,9 @@ const Header = () => {
                         className={({ isActive }) =>
                           isActive
                             ? "text-md bg-blue-950 text-white"
-                            : "text-md hover:bg-blue-950 hover:text-white"
+                            : `text-md ${
+                                scrolling ? " text-blue-950" : ""
+                              } hover:bg-blue-950 hover:text-white`
                         }
                       >
                         Home
@@ -92,7 +94,9 @@ const Header = () => {
                         className={({ isActive }) =>
                           isActive
                             ? "text-md bg-blue-950 text-white"
-                            : "text-md hover:bg-blue-950 hover:text-white"
+                            : `text-md ${
+                                scrolling ? " text-blue-950" : ""
+                              } hover:bg-blue-950 hover:text-white`
                         }
                       >
                         Coupons
@@ -104,7 +108,9 @@ const Header = () => {
                         className={({ isActive }) =>
                           isActive
                             ? "text-md bg-blue-950 text-white"
-                            : "text-md hover:bg-blue-950 hover:text-white"
+                            : `text-md ${
+                                scrolling ? " text-blue-950" : ""
+                              } hover:bg-blue-950 hover:text-white`
                         }
                       >
                         Report Issue
