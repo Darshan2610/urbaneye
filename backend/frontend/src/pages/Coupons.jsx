@@ -126,7 +126,7 @@ const Coupons = () => {
                       className="cursor-pointer px-2 py-1 rounded-full border-[2px] font-semibold hover:bg-pink-500 hover:text-white duration-200"
                       onClick={() => openModal(item)}
                     >
-                      Redeem Now
+                      Redeem Now !!
                     </div>
                   )}
                 </div>
